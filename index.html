@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wolf AI Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:white}
+header{padding:24px 18px;background:#151d35;border-bottom:1px solid #293653}
+h1{margin:0;color:#7dd3fc;font-size:27px}
+header p{color:#b7c4df;margin-bottom:0}
+main{max-width:600px;margin:auto;padding:20px}
+.card{background:#151d35;border:1px solid #293653;border-radius:16px;padding:20px}
+label{display:block;margin:18px 0 8px;font-weight:bold}
+textarea,select{width:100%;padding:13px;border-radius:9px;border:1px solid #465574;background:#0b1020;color:white;font-size:16px}
+textarea{min-height:115px;resize:vertical}
+button{width:100%;padding:15px;margin-top:18px;border:0;border-radius:10px;background:#38bdf8;color:#071321;font-weight:bold;font-size:16px}
+#result{display:none;margin-top:18px;padding:15px;background:#0b1020;border-radius:10px;line-height:1.6}
+small{color:#aab8d1}
+footer{text-align:center;color:#94a3b8;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<h1>🐺 Wolf AI Studio</h1>
+<p>Your ideas. Your imagination. Your videos.</p>
+</header>
+<main>
+<div class="card">
+<h2>Create a video</h2>
+<p>Describe the video you want to make.</p>
+<label for="prompt">Your video idea</label>
+<textarea id="prompt" placeholder="Example: A cute baby wolf exploring a magical forest..."></textarea>
+<label for="style">Animation style</label>
+<select id="style">
+<option>3D Cartoon</option>
+<option>Anime</option>
+<option>Realistic</option>
+<option>Kids Nursery Rhymes</option>
+<option>Cinematic</option>
+</select>
+<label for="duration">Video duration</label>
+<select id="duration">
+<option>5 seconds</option>
+<option>10 seconds</option>
+<option>15 seconds</option>
+<option>30 seconds</option>
+<option>60 seconds</option>
+</select>
+<button onclick="createPrompt()">Prepare My Video</button>
+<div id="result"></div>
+</div>
+<p><small>Free starter version • AI video generation connection coming next</small></p>
+</main>
+<footer>🐺 Wolf AI Studio © 2026</footer>
+<script>
+function createPrompt(){
+const idea=document.getElementById('prompt').value.trim();
+if(!idea){alert('Please describe your video first.');return;}
+const style=document.getElementById('style').value;
+const duration=document.getElementById('duration').value;
+const result=document.getElementById('result');
+result.style.display='block';
+result.innerHTML='';
+const heading=document.createElement('h3');
+heading.textContent='Your video prompt is ready!';
+const details=document.createElement('p');
+details.textContent='Style: '+style+' | Duration: '+duration;
+const description=document.createElement('p');
+description.textContent=idea;
+const note=document.createElement('small');
+note.textContent='This starter prepares your prompt but does not generate a video yet.';
+const copy=document.createElement('button');
+copy.textContent='Copy Video Prompt';
+copy.onclick=async function(){
+const text='Create a '+duration+' video in '+style+' style. '+idea;
+try{
+await navigator.clipboard.writeText(text);
+copy.textContent='Copied!';
+}catch(e){
+const field=document.createElement('textarea');
+field.value=text;
+result.appendChild(field);
+field.select();
+document.execCommand('copy');
+field.remove();
+copy.textContent='Copied!';
+}
+};
+result.append(heading,details,description,note,copy);
+}
+</script>
+</body>
+</html>
